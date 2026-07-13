@@ -23,12 +23,10 @@ export default function ShatterImage({
 
     const io = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setSplit(true);
-          io.disconnect();
-        }
+        // Tear apart when in view; reseal when leaving so it can tear again on scroll-back
+        setSplit(entry.isIntersecting);
       },
-      { threshold: 0.35, rootMargin: '0px 0px -8% 0px' },
+      { threshold: 0.3, rootMargin: '0px 0px -6% 0px' },
     );
 
     io.observe(el);
