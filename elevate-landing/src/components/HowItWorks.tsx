@@ -43,8 +43,8 @@ export default function HowItWorks() {
         </motion.p>
         <motion.h2
           className="pipeline__title"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={viewportOnce}
           transition={{ duration: 0.75, ease: easeOut }}
         >
@@ -56,8 +56,8 @@ export default function HowItWorks() {
             <motion.div
               key={step.num}
               className="pipeline__card crystal-card"
-              initial={{ opacity: 0, y: 28 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
               viewport={viewportOnce}
               transition={{ duration: 0.65, delay: i * 0.1, ease: easeOut }}
             >

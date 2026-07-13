@@ -7,9 +7,9 @@ export default function AppointmentSection() {
       <div className="section-inner appointment__inner">
         <motion.div
           className="appointment__media"
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.7 }}
         >
           <img

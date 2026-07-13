@@ -1,11 +1,20 @@
 import { useEffect, useState } from 'react';
 import './Navbar.css';
 
+const isMobileNav = () =>
+  typeof window !== 'undefined' && window.matchMedia('(max-width: 900px)').matches;
+
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
+  const [scrolled, setScrolled] = useState(() => isMobileNav());
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
+    // Mobile: keep a stable navbar — padding/state thrash during scroll causes hitching
+    if (isMobileNav()) {
+      setScrolled(true);
+      return;
+    }
+
     let ticking = false;
     const onScroll = () => {
       if (ticking) return;
@@ -15,6 +24,7 @@ export default function Navbar() {
         ticking = false;
       });
     };
+    onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
@@ -29,7 +39,9 @@ export default function Navbar() {
   const scrollTo = (id: string) => (e: React.MouseEvent) => {
     e.preventDefault();
     setMenuOpen(false);
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    // Instant scroll on mobile — smooth scroll feels like a lock mid-swipe
+    const behavior: ScrollBehavior = isMobileNav() ? 'auto' : 'smooth';
+    document.getElementById(id)?.scrollIntoView({ behavior });
   };
 
   return (
@@ -43,12 +55,27 @@ export default function Navbar() {
           <a href="#pipeline" onClick={scrollTo('pipeline')}>Pipeline</a>
           <a href="#custom-lms" onClick={scrollTo('custom-lms')}>Custom LMS</a>
           <a href="#benefits" onClick={scrollTo('benefits')}>Benefits</a>
-          <a href="#cta" className="navbar__links-cta" onClick={scrollTo('cta')}>
+          <a
+            href="https://calendly.com/theelevatemarketingco/30min"
+            className="navbar__links-cta"
+            onClick={(e) => {
+              e.preventDefault();
+              setMenuOpen(false);
+              window.location.assign('https://calendly.com/theelevatemarketingco/30min');
+            }}
+          >
             Book an Appointment
           </a>
         </nav>
 
-        <a href="#cta" className="navbar__cta" onClick={scrollTo('cta')}>
+        <a
+          href="https://calendly.com/theelevatemarketingco/30min"
+          className="navbar__cta"
+          onClick={(e) => {
+            e.preventDefault();
+            window.location.assign('https://calendly.com/theelevatemarketingco/30min');
+          }}
+        >
           Book an Appointment
         </a>
 

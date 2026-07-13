@@ -1,14 +1,54 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { easeOut, viewportOnce } from '../motion';
+import { BOOKING_EMAIL, CALENDLY_URL } from '../booking';
 import './CTASection.css';
 
 export default function CTASection() {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
+    setError(null);
+    setSubmitting(true);
+
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    const payload = {
+      institution: String(data.get('institution') || ''),
+      role: String(data.get('role') || ''),
+      email: String(data.get('email') || ''),
+      scope: String(data.get('scope') || ''),
+      _subject: 'New Elevate Appointment Request',
+      _template: 'table',
+    };
+
+    try {
+      const res = await fetch(`https://formsubmit.co/ajax/${BOOKING_EMAIL}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        throw new Error('Failed to send booking details');
+      }
+
+      setSubmitted(true);
+      window.location.href = CALENDLY_URL;
+    } catch {
+      setError('Could not send your details. Opening Calendly so you can still book.');
+      window.setTimeout(() => {
+        window.location.href = CALENDLY_URL;
+      }, 1200);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -39,8 +79,8 @@ export default function CTASection() {
       <div className="section-inner cta__inner">
         <motion.h2
           className="cta__headline"
-          initial={{ opacity: 0, y: 22 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={viewportOnce}
           transition={{ duration: 0.75, ease: easeOut }}
         >
@@ -51,8 +91,8 @@ export default function CTASection() {
 
         <motion.p
           className="cta__subhead"
-          initial={{ opacity: 0, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={viewportOnce}
           transition={{ duration: 0.65, delay: 0.08, ease: easeOut }}
         >
@@ -61,9 +101,9 @@ export default function CTASection() {
 
         <motion.div
           className="cta__media"
-          initial={{ opacity: 0, y: 48 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.2 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.8, ease: easeOut }}
         >
           <img
@@ -77,8 +117,8 @@ export default function CTASection() {
 
         <motion.p
           className="cta__subtitle"
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={viewportOnce}
           transition={{ duration: 0.7, delay: 0.1, ease: easeOut }}
         >
@@ -89,18 +129,18 @@ export default function CTASection() {
         {submitted ? (
           <motion.div
             className="cta__success"
-            initial={{ opacity: 0, y: 12 }}
+            initial={{ opacity: 0 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: easeOut }}
           >
-            <p>Request received. A member of our institutional team will be in touch shortly.</p>
+            <p>Details received. Taking you to Calendly to pick a time…</p>
           </motion.div>
         ) : (
           <motion.form
             className="cta__form"
             onSubmit={handleSubmit}
-            initial={{ opacity: 0, y: 22 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={viewportOnce}
             transition={{ duration: 0.7, delay: 0.14, ease: easeOut }}
           >
@@ -123,8 +163,10 @@ export default function CTASection() {
               <input id="scope" name="scope" type="text" placeholder="e.g. 40 courses / undergraduate biology dept." />
             </div>
 
-            <button type="submit" className="solid-btn cta__submit">
-              Book an Appointment
+            {error && <p className="cta__error">{error}</p>}
+
+            <button type="submit" className="solid-btn cta__submit" disabled={submitting}>
+              {submitting ? 'Sending…' : 'Book an Appointment'}
             </button>
           </motion.form>
         )}

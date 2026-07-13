@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import { MotionConfig } from 'framer-motion';
 import AuroraBackground from './components/AuroraBackground';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -14,9 +16,25 @@ import CustomLMS from './components/CustomLMS';
 import CTASection from './components/CTASection';
 import Footer from './components/Footer';
 
+function useMobileScrollMode() {
+  const [mobile, setMobile] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 900px), (pointer: coarse)');
+    const sync = () => setMobile(mq.matches);
+    sync();
+    mq.addEventListener('change', sync);
+    return () => mq.removeEventListener('change', sync);
+  }, []);
+
+  return mobile;
+}
+
 function App() {
+  const mobileScrollMode = useMobileScrollMode();
+
   return (
-    <>
+    <MotionConfig reducedMotion={mobileScrollMode ? 'always' : 'user'}>
       <AuroraBackground />
       <Navbar />
 
@@ -58,7 +76,7 @@ function App() {
       </main>
 
       <Footer />
-    </>
+    </MotionConfig>
   );
 }
 

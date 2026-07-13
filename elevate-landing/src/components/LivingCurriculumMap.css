@@ -48,6 +48,9 @@
   min-height: 400px;
   max-height: 640px;
   overflow: visible;
+  touch-action: pan-y;
+  /* Let vertical swipes pass through empty map space */
+  pointer-events: none;
 }
 
 .cmap__orbit {
@@ -135,6 +138,7 @@
   position: absolute;
   z-index: 4;
   transform: translate(-50%, -50%);
+  pointer-events: none;
 }
 
 .cmap__branch--active {
@@ -151,8 +155,10 @@
   flex-direction: column;
   align-items: center;
   gap: 6px;
-  padding: 0;
+  padding: 8px;
   color: var(--silver-dim);
+  touch-action: manipulation;
+  pointer-events: auto;
 }
 
 .cmap__node-dot {

@@ -21,42 +21,31 @@ export default function CustomLMS() {
   const [visibleMessages, setVisibleMessages] = useState<typeof chatMessages>([]);
 
   useEffect(() => {
-    // Simulate a typing effect/delayed chat conversation
+    const mobile =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(max-width: 900px), (pointer: coarse)').matches;
+
+    // Mobile: show full chat instantly — staggered setState during scroll feels like locking
+    if (mobile) {
+      setVisibleMessages(chatMessages);
+      return;
+    }
+
     setVisibleMessages([chatMessages[0]]);
-    const timers: any[] = [];
-
-    const t1 = setTimeout(() => {
-      setVisibleMessages(prev => [...prev, chatMessages[1]]);
-    }, 1500);
-
-    const t2 = setTimeout(() => {
-      setVisibleMessages(prev => [...prev, chatMessages[2]]);
-    }, 3500);
-
-    const t3 = setTimeout(() => {
-      setVisibleMessages(prev => [...prev, chatMessages[3]]);
-    }, 5000);
-
-    timers.push(t1, t2, t3);
-
-    // Loop conversation
-    const loopTimer = setInterval(() => {
-      setVisibleMessages([chatMessages[0]]);
-      const lt1 = setTimeout(() => {
-        setVisibleMessages(prev => [...prev, chatMessages[1]]);
-      }, 1500);
-      const lt2 = setTimeout(() => {
-        setVisibleMessages(prev => [...prev, chatMessages[2]]);
-      }, 3500);
-      const lt3 = setTimeout(() => {
-        setVisibleMessages(prev => [...prev, chatMessages[3]]);
-      }, 5000);
-      timers.push(lt1, lt2, lt3);
-    }, 10000);
+    const timers = [
+      window.setTimeout(() => {
+        setVisibleMessages((prev) => [...prev, chatMessages[1]]);
+      }, 1500),
+      window.setTimeout(() => {
+        setVisibleMessages((prev) => [...prev, chatMessages[2]]);
+      }, 3500),
+      window.setTimeout(() => {
+        setVisibleMessages((prev) => [...prev, chatMessages[3]]);
+      }, 5000),
+    ];
 
     return () => {
       timers.forEach(clearTimeout);
-      clearInterval(loopTimer);
     };
   }, []);
 
@@ -74,8 +63,8 @@ export default function CustomLMS() {
         </motion.p>
         <motion.h2
           className="lms__title"
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={viewportOnce}
           transition={{ duration: 0.7, ease: easeOut }}
         >
@@ -85,8 +74,8 @@ export default function CustomLMS() {
         </motion.h2>
         <motion.p
           className="lms__lead"
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={viewportOnce}
           transition={{ duration: 0.65, delay: 0.06, ease: easeOut }}
         >
@@ -97,9 +86,9 @@ export default function CustomLMS() {
           {/* Left Side: Interactive Dashboard Mockup */}
           <motion.div
             className="lms__visual"
-            initial={{ opacity: 0, scale: 0.98, y: 24 }}
-            whileInView={{ opacity: 1, scale: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.2 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.8, ease: easeOut }}
           >
             <div className="lms__mockup-header">
@@ -150,9 +139,9 @@ export default function CustomLMS() {
                       <motion.div
                         key={idx + '-' + msg.sender}
                         className={`lms__chat-bubble lms__chat-bubble--${msg.sender}`}
-                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        transition={{ duration: 0.3, ease: easeOut }}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.25, ease: easeOut }}
                       >
                         <p className="lms__bubble-text">{msg.text}</p>
                         {msg.sender === 'bot' && idx === visibleMessages.length - 1 && (
@@ -173,9 +162,9 @@ export default function CustomLMS() {
           <div className="lms__features">
             <motion.div
               className="lms__feature-card"
-              initial={{ opacity: 0, x: 24 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: false, amount: 0.2 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.6, delay: 0.05, ease: easeOut }}
             >
               <div className="lms__feature-icon">
@@ -194,9 +183,9 @@ export default function CustomLMS() {
 
             <motion.div
               className="lms__feature-card"
-              initial={{ opacity: 0, x: 24 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: false, amount: 0.2 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.6, delay: 0.12, ease: easeOut }}
             >
               <div className="lms__feature-icon">
@@ -214,9 +203,9 @@ export default function CustomLMS() {
 
             <motion.div
               className="lms__feature-card"
-              initial={{ opacity: 0, x: 24 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: false, amount: 0.2 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.6, delay: 0.19, ease: easeOut }}
             >
               <div className="lms__feature-icon">
@@ -235,9 +224,9 @@ export default function CustomLMS() {
 
             <motion.div
               className="lms__feature-card"
-              initial={{ opacity: 0, x: 24 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: false, amount: 0.2 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.6, delay: 0.23, ease: easeOut }}
             >
               <div className="lms__feature-icon">
@@ -256,9 +245,9 @@ export default function CustomLMS() {
 
             <motion.div
               className="lms__feature-card"
-              initial={{ opacity: 0, x: 24 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: false, amount: 0.2 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.6, delay: 0.27, ease: easeOut }}
             >
               <div className="lms__feature-icon">
@@ -280,9 +269,9 @@ export default function CustomLMS() {
 
             <motion.div
               className="lms__feature-card"
-              initial={{ opacity: 0, x: 24 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: false, amount: 0.2 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.6, delay: 0.31, ease: easeOut }}
             >
               <div className="lms__feature-icon">

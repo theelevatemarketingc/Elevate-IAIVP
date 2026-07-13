@@ -20,8 +20,8 @@ export default function EfficiencyProof() {
         </motion.p>
         <motion.h2
           className="proof__title"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={viewportOnce}
           transition={{ duration: 0.75, ease: easeOut }}
         >
@@ -31,9 +31,9 @@ export default function EfficiencyProof() {
         <div className="proof__split">
           <motion.div
             className="proof__panel"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.2 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.65, ease: easeOut }}
           >
             <div className="proof__callout">
@@ -48,9 +48,9 @@ export default function EfficiencyProof() {
 
           <motion.div
             className="proof__panel"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.2 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.65, ease: easeOut, delay: 0.08 }}
           >
             <div className="proof__callout">

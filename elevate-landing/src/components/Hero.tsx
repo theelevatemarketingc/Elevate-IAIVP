@@ -51,7 +51,14 @@ export default function Hero() {
           transition={{ duration: 0.85, delay: 0.34, ease: easeOut }}
           className="hero__cta-wrap"
         >
-          <a href="#cta" className="glass-btn">
+          <a
+            href="https://calendly.com/theelevatemarketingco/30min"
+            className="glass-btn"
+            onClick={(e) => {
+              e.preventDefault();
+              window.location.assign('https://calendly.com/theelevatemarketingco/30min');
+            }}
+          >
             Book an Appointment
             <span className="glass-btn__arrow">→</span>
           </a>

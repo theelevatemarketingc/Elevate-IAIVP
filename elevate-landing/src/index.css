@@ -28,6 +28,7 @@
 html {
   scroll-behavior: auto;
   background: var(--black);
+  -webkit-text-size-adjust: 100%;
 }
 
 html,
@@ -35,7 +36,7 @@ body {
   margin: 0;
   padding: 0;
   width: 100%;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {
@@ -46,12 +47,14 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Avoid delaying scroll when a swipe starts on buttons/links */
+  touch-action: manipulation;
 }
 
 #root {
   position: relative;
   width: 100%;
-  overflow-x: hidden;
+  overflow-x: clip;
   background: transparent;
 }
 
@@ -135,12 +138,14 @@ img, svg {
   width: 100%;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 900px) {
   .section {
     padding: clamp(40px, 8vw, 64px) clamp(16px, 4vw, 24px);
-    /* keep aurora visible — skip content-visibility compositing quirks on mobile */
     isolation: auto;
-    overflow: visible;
+    overflow: visible !important;
+    transform: none !important;
+    contain: none !important;
+    content-visibility: visible !important;
   }
 
   .section:not(.hero) {
@@ -183,6 +188,79 @@ img, svg {
     background:
       radial-gradient(ellipse at 50% 0%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.12) 55%, rgba(0,0,0,0.45) 100%),
       radial-gradient(ellipse at 50% 100%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.15) 55%, rgba(0,0,0,0.5) 100%);
+  }
+
+  /* Kill continuous CSS animations — they fight touch scrolling on phones */
+  .orbit-ring,
+  .hero__ring--1,
+  .hero__ring--2,
+  .hero__ring-dot {
+    animation: none !important;
+  }
+
+  .crystal-card:hover,
+  .glass-btn:hover,
+  .solid-btn:hover {
+    transform: none;
+  }
+
+  /* Nested scroll containers trap touch and lock the page */
+  .lms__chat-messages,
+  .lms__panel--chat,
+  .lms__visual,
+  .cmap__stage,
+  .cmap__stage-wrap,
+  .vision,
+  .shatter {
+    overflow: visible !important;
+    overflow-y: visible !important;
+    max-height: none !important;
+    touch-action: pan-y;
+  }
+
+  .cmap__node,
+  .lms__bubble-btn,
+  button,
+  a {
+    touch-action: manipulation;
+  }
+
+  /*
+   * Strip GPU-heavy paint and motion during scroll.
+   * Framer still mounts observers; reducedMotion + no transitions keeps swipes free.
+   */
+  .page-main,
+  .page-main * {
+    scroll-behavior: auto !important;
+  }
+
+  .crystal-card,
+  .glass-btn,
+  .solid-btn,
+  .qgate__card,
+  .lms__feature-card,
+  .lms__visual,
+  .cmap__preview-inner,
+  .benefits__img {
+    box-shadow: none !important;
+    filter: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    transition: none !important;
+  }
+
+  .navbar {
+    transition: none !important;
+    padding: 14px clamp(16px, 4vw, 24px) !important;
+  }
+
+  .navbar--scrolled {
+    padding: 14px clamp(16px, 4vw, 24px) !important;
+  }
+
+  .shatter__piece {
+    transition: none !important;
+    transform: none !important;
   }
 }
 

@@ -32,15 +32,15 @@ export default function ROICalculator() {
           className="eyebrow roi__eyebrow"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          viewport={{ once: false }}
+          viewport={{ once: true }}
         >
           Institutional ROI Engine
         </motion.p>
         <motion.h2
           className="roi__title"
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.65 }}
         >
           MODEL YOUR SAVINGS BEFORE YOU DEPLOY.
@@ -48,9 +48,9 @@ export default function ROICalculator() {
 
         <motion.div
           className="roi__panel"
-          initial={{ opacity: 0, y: 22 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.65, delay: 0.08 }}
         >
           <div className="roi__controls">

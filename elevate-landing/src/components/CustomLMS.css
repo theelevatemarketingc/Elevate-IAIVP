@@ -41,9 +41,10 @@
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65), 0 0 40px rgba(139, 0, 34, 0.1);
-  overflow: hidden;
+  overflow: visible;
   display: flex;
   flex-direction: column;
+  touch-action: pan-y;
 }
 
 .lms__mockup-header {
@@ -220,9 +221,8 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  overflow-y: auto;
+  overflow: visible;
   padding-right: 4px;
-  max-height: 270px;
 }
 
 .lms__chat-bubble {
@@ -379,6 +379,8 @@
     max-width: 600px;
     margin: 0 auto;
     width: 100%;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 }
 
@@ -399,7 +401,13 @@
   }
 
   .lms__chat-messages {
-    max-height: 220px;
+    max-height: none;
+    overflow: visible;
+  }
+
+  .lms__status-pulse,
+  .lms__avatar-pulse {
+    animation: none;
   }
 
   .lms__feature-card {

@@ -6,6 +6,10 @@ const PIECES = [
   { id: 'right', pos: '100% 50%', endX: 28, endY: 4, endRot: 8 },
 ] as const;
 
+const isTouch =
+  typeof window !== 'undefined' &&
+  window.matchMedia('(max-width: 900px), (pointer: coarse)').matches;
+
 export default function ShatterImage({
   src,
   alt,
@@ -30,15 +34,19 @@ export default function ShatterImage({
             backgroundImage: `url(${src})`,
             backgroundPosition: piece.pos,
           }}
-          initial={{ x: 0, y: 0, rotate: 0 }}
-          whileInView={{
-            x: piece.endX,
-            y: piece.endY,
-            rotate: piece.endRot,
-          }}
-          viewport={{ once: false, amount: 0.4, margin: '0px 0px -10% 0px' }}
+          initial={isTouch ? { opacity: 0 } : { x: 0, y: 0, rotate: 0 }}
+          whileInView={
+            isTouch
+              ? { opacity: 1 }
+              : {
+                  x: piece.endX,
+                  y: piece.endY,
+                  rotate: piece.endRot,
+                }
+          }
+          viewport={{ once: true, amount: 0.35 }}
           transition={{
-            duration: 0.7,
+            duration: isTouch ? 0.4 : 0.7,
             ease: easeOut,
             delay: i * 0.04,
           }}

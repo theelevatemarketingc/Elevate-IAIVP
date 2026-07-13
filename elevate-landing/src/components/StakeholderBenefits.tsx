@@ -39,8 +39,8 @@ export default function StakeholderBenefits() {
         </motion.p>
         <motion.h2
           className="benefits__title"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={viewportOnce}
           transition={{ duration: 0.75, ease: easeOut }}
         >
@@ -52,9 +52,9 @@ export default function StakeholderBenefits() {
             <motion.figure
               key={layer.src}
               className="benefits__figure"
-              initial={{ opacity: 0, y: 48 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.2 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true, amount: 0.2 }}
               transition={{
                 duration: 0.75,
                 delay: i * 0.08,

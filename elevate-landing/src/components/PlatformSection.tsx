@@ -11,7 +11,7 @@ export default function PlatformSection() {
             className="platform__visual"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            viewport={{ once: false, amount: 0.2 }}
+            viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.85, ease: easeOut }}
           >
             <img
@@ -26,9 +26,9 @@ export default function PlatformSection() {
           <div className="platform__title-wrap">
             <motion.h2
               className="platform__title"
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.2 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.75, delay: 0.08, ease: easeOut }}
             >
               CURRICULUM,
@@ -42,7 +42,7 @@ export default function PlatformSection() {
             className="platform__link"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            viewport={{ once: false, amount: 0.2 }}
+            viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.55, delay: 0.15, ease: easeOut }}
           >
             See how the pipeline works

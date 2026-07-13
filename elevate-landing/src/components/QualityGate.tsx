@@ -40,8 +40,8 @@ export default function QualityGate() {
         </motion.p>
         <motion.h2
           className="qgate__title"
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={viewportOnce}
           transition={{ duration: 0.7, ease: easeOut }}
         >
@@ -51,8 +51,8 @@ export default function QualityGate() {
         </motion.h2>
         <motion.p
           className="qgate__lead"
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={viewportOnce}
           transition={{ duration: 0.65, delay: 0.06, ease: easeOut }}
         >
@@ -66,9 +66,9 @@ export default function QualityGate() {
             <motion.article
               key={gate.num}
               className="qgate__step"
-              initial={{ opacity: 0, y: 22 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.3 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.6, delay: i * 0.07, ease: easeOut }}
             >
               <div className="qgate__marker">

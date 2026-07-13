@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { easeOut, viewportOnce } from '../motion';
 import './LivingCurriculumMap.css';
 
@@ -69,6 +69,9 @@ const modules: {
 
 export default function LivingCurriculumMap() {
   const [active, setActive] = useState<string | null>('biology');
+  const isTouch =
+    typeof window !== 'undefined' &&
+    window.matchMedia('(max-width: 900px), (pointer: coarse)').matches;
 
   return (
     <>
@@ -85,8 +88,8 @@ export default function LivingCurriculumMap() {
           </motion.p>
           <motion.h2
             className="cmap__title"
-            initial={{ opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={viewportOnce}
             transition={{ duration: 0.7, ease: easeOut }}
           >
@@ -94,8 +97,8 @@ export default function LivingCurriculumMap() {
           </motion.h2>
           <motion.p
             className="cmap__lead"
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={viewportOnce}
             transition={{ duration: 0.65, delay: 0.08, ease: easeOut }}
           >
@@ -137,7 +140,7 @@ export default function LivingCurriculumMap() {
               <button
                 type="button"
                 className={`cmap__node ${active === m.id ? 'cmap__node--active' : ''}`}
-                onMouseEnter={() => setActive(m.id)}
+                onMouseEnter={isTouch ? undefined : () => setActive(m.id)}
                 onFocus={() => setActive(m.id)}
                 onClick={() => setActive(m.id)}
                 aria-expanded={active === m.id}
@@ -147,35 +150,27 @@ export default function LivingCurriculumMap() {
                 <span className="cmap__node-code">{m.code}</span>
               </button>
 
-              <AnimatePresence>
-                {active === m.id && (
-                  <div
-                    id={`cmap-preview-${m.id}`}
-                    className={`cmap__preview cmap__preview--${m.anchor}`}
-                  >
-                    <motion.div
-                      className="cmap__preview-inner"
-                      initial={{ opacity: 0, scale: 0.96, y: 6 }}
-                      animate={{ opacity: 1, scale: 1, y: 0 }}
-                      exit={{ opacity: 0, scale: 0.98, y: -4 }}
-                      transition={{ duration: 0.35, ease: easeOut }}
-                    >
-                      <img
-                        src={m.image}
-                        alt=""
-                        className="cmap__preview-img"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                      <div className="cmap__preview-meta">
-                        <p className="cmap__preview-code">{m.code}</p>
-                        <h3 className="cmap__preview-title">{m.label}</h3>
-                        <p className="cmap__preview-blurb">{m.blurb}</p>
-                      </div>
-                    </motion.div>
+              {active === m.id && (
+                <div
+                  id={`cmap-preview-${m.id}`}
+                  className={`cmap__preview cmap__preview--${m.anchor}`}
+                >
+                  <div className="cmap__preview-inner">
+                    <img
+                      src={m.image}
+                      alt=""
+                      className="cmap__preview-img"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <div className="cmap__preview-meta">
+                      <p className="cmap__preview-code">{m.code}</p>
+                      <h3 className="cmap__preview-title">{m.label}</h3>
+                      <p className="cmap__preview-blurb">{m.blurb}</p>
+                    </div>
                   </div>
-                )}
-              </AnimatePresence>
+                </div>
+              )}
             </div>
           ))}
         </div>
