@@ -15,11 +15,9 @@ export default function VisionSection() {
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.9, ease: easeOut }}
           >
-            ADVANCE
+            VISUALIZE
             <br />
-            VISUAL LEARNING
-            <br />
-            MODULES
+            ALL CONCEPTS
           </motion.h2>
 
           <motion.img
