@@ -6,8 +6,15 @@
 
 .vision__inner {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.vision__book {
+  position: relative;
+  z-index: 3;
+  margin-top: clamp(8px, 2vw, 20px);
 }
 
 .vision__stage {

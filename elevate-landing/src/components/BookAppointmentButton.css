@@ -1,0 +1,22 @@
+.book-cta {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(28px, 4vw, 48px);
+}
+
+.book-cta__btn {
+  width: auto;
+  min-width: min(100%, 280px);
+}
+
+@media (max-width: 640px) {
+  .book-cta {
+    margin-top: 28px;
+    padding: 0 8px;
+  }
+
+  .book-cta__btn {
+    width: 100%;
+    max-width: 320px;
+  }
+}

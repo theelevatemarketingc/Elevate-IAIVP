@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { easeOut, viewportOnce } from '../motion';
+import BookAppointmentButton from './BookAppointmentButton';
 import './QualityGate.css';
 
 const gates = [
@@ -82,6 +83,8 @@ export default function QualityGate() {
             </motion.article>
           ))}
         </div>
+
+        <BookAppointmentButton />
       </div>
     </section>
   );

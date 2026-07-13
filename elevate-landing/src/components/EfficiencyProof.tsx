@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { easeOut, viewportOnce } from '../motion';
 import ShatterImage from './ShatterImage';
+import BookAppointmentButton from './BookAppointmentButton';
 import './EfficiencyProof.css';
 
 export default function EfficiencyProof() {
@@ -63,6 +64,8 @@ export default function EfficiencyProof() {
             <p className="proof__axis-title">PER-COURSE PRODUCTION SPEND (NORMALIZED)</p>
           </motion.div>
         </div>
+
+        <BookAppointmentButton />
       </div>
     </section>
   );

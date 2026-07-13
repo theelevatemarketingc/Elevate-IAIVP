@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { easeOut } from '../motion';
+import BookAppointmentButton from './BookAppointmentButton';
 import './VisionSection.css';
 
 export default function VisionSection() {
@@ -33,6 +34,8 @@ export default function VisionSection() {
             decoding="async"
           />
         </div>
+
+        <BookAppointmentButton className="vision__book" />
       </div>
     </section>
   );

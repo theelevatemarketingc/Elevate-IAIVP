@@ -1,9 +1,60 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { easeOut, viewportOnce } from '../motion';
 import { BOOKING_EMAIL, CALENDLY_URL } from '../booking';
 import './CTASection.css';
 
 export default function CTASection() {
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const goToCalendly = () => {
+    window.location.assign(CALENDLY_URL);
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError(null);
+    setSubmitting(true);
+
+    const form = e.currentTarget;
+    const data = new FormData(form);
+
+    const payload = {
+      Institution: String(data.get('institution') || ''),
+      Role: String(data.get('role') || ''),
+      Email: String(data.get('email') || ''),
+      'Syllabus Scope': String(data.get('scope') || ''),
+      _subject: 'New Elevate Appointment Request',
+      _template: 'table',
+      _captcha: 'false',
+    };
+
+    try {
+      const res = await fetch(`https://formsubmit.co/ajax/${BOOKING_EMAIL}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      // Email may succeed even if FormSubmit returns an odd status after activation
+      if (!res.ok) {
+        const body = await res.text().catch(() => '');
+        console.warn('FormSubmit response', res.status, body);
+      }
+    } catch (err) {
+      console.warn('FormSubmit error', err);
+      setError('Details may not have sent — opening Calendly anyway.');
+    } finally {
+      setSubmitting(false);
+      // Always take the user to Calendly (never FormSubmit's thank-you page)
+      goToCalendly();
+    }
+  };
+
   return (
     <section id="cta" className="cta section">
       <div className="cta__wave" aria-hidden="true" />
@@ -81,20 +132,12 @@ export default function CTASection() {
 
         <motion.form
           className="cta__form"
-          action={`https://formsubmit.co/${BOOKING_EMAIL}`}
-          method="POST"
+          onSubmit={handleSubmit}
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={viewportOnce}
           transition={{ duration: 0.7, delay: 0.14, ease: easeOut }}
         >
-          {/* FormSubmit: email the fields, then redirect to Calendly */}
-          <input type="hidden" name="_subject" value="New Elevate Appointment Request" />
-          <input type="hidden" name="_template" value="table" />
-          <input type="hidden" name="_captcha" value="false" />
-          <input type="hidden" name="_next" value={CALENDLY_URL} />
-          <input type="text" name="_honey" style={{ display: 'none' }} tabIndex={-1} autoComplete="off" />
-
           <div className="cta__form-row">
             <div className="cta__field">
               <label htmlFor="institution">Institution Name</label>
@@ -114,8 +157,10 @@ export default function CTASection() {
             <input id="scope" name="scope" type="text" placeholder="e.g. 40 courses / undergraduate biology dept." />
           </div>
 
-          <button type="submit" className="solid-btn cta__submit">
-            Book an Appointment
+          {error && <p className="cta__error">{error}</p>}
+
+          <button type="submit" className="solid-btn cta__submit" disabled={submitting}>
+            {submitting ? 'Sending…' : 'Book an Appointment'}
           </button>
         </motion.form>
       </div>
