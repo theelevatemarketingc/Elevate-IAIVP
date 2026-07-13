@@ -41,7 +41,7 @@ export default function Navbar() {
 
         <nav className={`navbar__links ${menuOpen ? 'navbar__links--open' : ''}`}>
           <a href="#pipeline" onClick={scrollTo('pipeline')}>Pipeline</a>
-          <a href="#proof" onClick={scrollTo('proof')}>Proof</a>
+          <a href="#custom-lms" onClick={scrollTo('custom-lms')}>Custom LMS</a>
           <a href="#benefits" onClick={scrollTo('benefits')}>Benefits</a>
           <a href="#cta" className="navbar__links-cta" onClick={scrollTo('cta')}>
             Book an Appointment

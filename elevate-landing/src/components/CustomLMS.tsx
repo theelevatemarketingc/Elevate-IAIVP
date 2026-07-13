@@ -18,13 +18,12 @@ const chatMessages = [
 ];
 
 export default function CustomLMS() {
-  const [activeMessageIndex, setActiveMessageIndex] = useState(0);
   const [visibleMessages, setVisibleMessages] = useState<typeof chatMessages>([]);
 
   useEffect(() => {
     // Simulate a typing effect/delayed chat conversation
     setVisibleMessages([chatMessages[0]]);
-    const timers: NodeJS.Timeout[] = [];
+    const timers: any[] = [];
 
     const t1 = setTimeout(() => {
       setVisibleMessages(prev => [...prev, chatMessages[1]]);
