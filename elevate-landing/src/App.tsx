@@ -15,6 +15,7 @@ import VisionSection from './components/VisionSection';
 import CustomLMS from './components/CustomLMS';
 import CTASection from './components/CTASection';
 import Footer from './components/Footer';
+import WhatsAppFloat from './components/WhatsAppFloat';
 
 function useMobileScrollMode() {
   const [mobile, setMobile] = useState(false);
@@ -76,6 +77,7 @@ function App() {
       </main>
 
       <Footer />
+      <WhatsAppFloat />
     </MotionConfig>
   );
 }
