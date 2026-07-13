@@ -1,56 +1,9 @@
-import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { easeOut, viewportOnce } from '../motion';
 import { BOOKING_EMAIL, CALENDLY_URL } from '../booking';
 import './CTASection.css';
 
 export default function CTASection() {
-  const [submitted, setSubmitted] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setError(null);
-    setSubmitting(true);
-
-    const form = e.currentTarget;
-    const data = new FormData(form);
-    const payload = {
-      institution: String(data.get('institution') || ''),
-      role: String(data.get('role') || ''),
-      email: String(data.get('email') || ''),
-      scope: String(data.get('scope') || ''),
-      _subject: 'New Elevate Appointment Request',
-      _template: 'table',
-    };
-
-    try {
-      const res = await fetch(`https://formsubmit.co/ajax/${BOOKING_EMAIL}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify(payload),
-      });
-
-      if (!res.ok) {
-        throw new Error('Failed to send booking details');
-      }
-
-      setSubmitted(true);
-      window.location.href = CALENDLY_URL;
-    } catch {
-      setError('Could not send your details. Opening Calendly so you can still book.');
-      window.setTimeout(() => {
-        window.location.href = CALENDLY_URL;
-      }, 1200);
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
   return (
     <section id="cta" className="cta section">
       <div className="cta__wave" aria-hidden="true" />
@@ -126,50 +79,45 @@ export default function CTASection() {
           production plan within 48 hours.
         </motion.p>
 
-        {submitted ? (
-          <motion.div
-            className="cta__success"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: easeOut }}
-          >
-            <p>Details received. Taking you to Calendly to pick a time…</p>
-          </motion.div>
-        ) : (
-          <motion.form
-            className="cta__form"
-            onSubmit={handleSubmit}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={viewportOnce}
-            transition={{ duration: 0.7, delay: 0.14, ease: easeOut }}
-          >
-            <div className="cta__form-row">
-              <div className="cta__field">
-                <label htmlFor="institution">Institution Name</label>
-                <input id="institution" name="institution" type="text" placeholder="Institution name" required />
-              </div>
-              <div className="cta__field">
-                <label htmlFor="role">Your Role</label>
-                <input id="role" name="role" type="text" placeholder="e.g. Provost, Dean, Faculty" required />
-              </div>
+        <motion.form
+          className="cta__form"
+          action={`https://formsubmit.co/${BOOKING_EMAIL}`}
+          method="POST"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={viewportOnce}
+          transition={{ duration: 0.7, delay: 0.14, ease: easeOut }}
+        >
+          {/* FormSubmit: email the fields, then redirect to Calendly */}
+          <input type="hidden" name="_subject" value="New Elevate Appointment Request" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_next" value={CALENDLY_URL} />
+          <input type="text" name="_honey" style={{ display: 'none' }} tabIndex={-1} autoComplete="off" />
+
+          <div className="cta__form-row">
+            <div className="cta__field">
+              <label htmlFor="institution">Institution Name</label>
+              <input id="institution" name="institution" type="text" placeholder="Institution name" required />
             </div>
             <div className="cta__field">
-              <label htmlFor="email">Institutional Email</label>
-              <input id="email" name="email" type="email" placeholder="you@institution.edu" required />
+              <label htmlFor="role">Your Role</label>
+              <input id="role" name="role" type="text" placeholder="e.g. Provost, Dean, Faculty" required />
             </div>
-            <div className="cta__field">
-              <label htmlFor="scope">Syllabus Scope</label>
-              <input id="scope" name="scope" type="text" placeholder="e.g. 40 courses / undergraduate biology dept." />
-            </div>
+          </div>
+          <div className="cta__field">
+            <label htmlFor="email">Institutional Email</label>
+            <input id="email" name="email" type="email" placeholder="you@institution.edu" required />
+          </div>
+          <div className="cta__field">
+            <label htmlFor="scope">Syllabus Scope</label>
+            <input id="scope" name="scope" type="text" placeholder="e.g. 40 courses / undergraduate biology dept." />
+          </div>
 
-            {error && <p className="cta__error">{error}</p>}
-
-            <button type="submit" className="solid-btn cta__submit" disabled={submitting}>
-              {submitting ? 'Sending…' : 'Book an Appointment'}
-            </button>
-          </motion.form>
-        )}
+          <button type="submit" className="solid-btn cta__submit">
+            Book an Appointment
+          </button>
+        </motion.form>
       </div>
     </section>
   );
