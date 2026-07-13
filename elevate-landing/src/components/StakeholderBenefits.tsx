@@ -5,7 +5,7 @@ import './StakeholderBenefits.css';
 const layers = [
   {
     src: '/benefits/layer-01.webp',
-    alt: 'Student learning complex subjects through visual modules',
+    alt: 'Medical student exploring a visual heart learning module on a tablet',
     title: 'Understand Complex Subjects',
     subtitle:
       'Advanced visual learning modules help students understand concepts through a lens they have never seen before.',
