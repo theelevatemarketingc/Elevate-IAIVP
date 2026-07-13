@@ -257,11 +257,6 @@ img, svg {
   .navbar--scrolled {
     padding: 14px clamp(16px, 4vw, 24px) !important;
   }
-
-  .shatter__piece {
-    transition: none !important;
-    transform: none !important;
-  }
 }
 
 @media (max-width: 480px) {

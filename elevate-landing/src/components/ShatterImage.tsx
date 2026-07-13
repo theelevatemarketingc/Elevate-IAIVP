@@ -1,14 +1,9 @@
-import { motion } from 'framer-motion';
-import { easeOut } from '../motion';
+import { useEffect, useRef, useState } from 'react';
 
 const PIECES = [
-  { id: 'left', pos: '0% 50%', endX: -28, endY: -4, endRot: -8 },
-  { id: 'right', pos: '100% 50%', endX: 28, endY: 4, endRot: 8 },
-] as const;
-
-const isTouch =
-  typeof window !== 'undefined' &&
-  window.matchMedia('(max-width: 900px), (pointer: coarse)').matches;
+  { id: 'left', pos: '0% 50%', side: 'left' as const },
+  { id: 'right', pos: '100% 50%', side: 'right' as const },
+];
 
 export default function ShatterImage({
   src,
@@ -19,36 +14,42 @@ export default function ShatterImage({
   alt: string;
   aspect?: string;
 }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [split, setSplit] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setSplit(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.35, rootMargin: '0px 0px -8% 0px' },
+    );
+
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
     <div
-      className="shatter"
+      ref={ref}
+      className={`shatter${split ? ' shatter--split' : ''}`}
       role="img"
       aria-label={alt}
       style={{ aspectRatio: aspect }}
     >
-      {PIECES.map((piece, i) => (
-        <motion.div
+      {PIECES.map((piece) => (
+        <div
           key={piece.id}
-          className="shatter__piece"
+          className={`shatter__piece shatter__piece--${piece.side}`}
           style={{
             backgroundImage: `url(${src})`,
             backgroundPosition: piece.pos,
-          }}
-          initial={isTouch ? { opacity: 0 } : { x: 0, y: 0, rotate: 0 }}
-          whileInView={
-            isTouch
-              ? { opacity: 1 }
-              : {
-                  x: piece.endX,
-                  y: piece.endY,
-                  rotate: piece.endRot,
-                }
-          }
-          viewport={{ once: true, amount: 0.35 }}
-          transition={{
-            duration: isTouch ? 0.4 : 0.7,
-            ease: easeOut,
-            delay: i * 0.04,
           }}
         />
       ))}

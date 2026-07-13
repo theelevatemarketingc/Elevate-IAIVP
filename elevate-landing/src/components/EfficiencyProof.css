@@ -101,6 +101,7 @@
   margin: 8px auto 0;
   overflow: visible;
   contain: layout style;
+  pointer-events: none;
 }
 
 .shatter__piece {
@@ -108,10 +109,18 @@
   height: 100%;
   background-size: 200% 100%;
   background-repeat: no-repeat;
-  will-change: auto;
   backface-visibility: hidden;
-  transform: translate3d(0, 0, 0);
-  /* GPU-friendly; no filter on animated nodes */
+  transform: translate3d(0, 0, 0) rotate(0deg);
+  transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.shatter--split .shatter__piece--left {
+  transform: translate3d(-22px, -4px, 0) rotate(-8deg);
+}
+
+.shatter--split .shatter__piece--right {
+  transform: translate3d(22px, 4px, 0) rotate(8deg);
 }
 
 @media (max-width: 860px) {
@@ -129,6 +138,14 @@
   .shatter {
     width: min(100%, 160px);
   }
+
+  .shatter--split .shatter__piece--left {
+    transform: translate3d(-16px, -3px, 0) rotate(-7deg);
+  }
+
+  .shatter--split .shatter__piece--right {
+    transform: translate3d(16px, 3px, 0) rotate(7deg);
+  }
 }
 
 @media (max-width: 480px) {
@@ -143,6 +160,11 @@
 
 @media (prefers-reduced-motion: reduce) {
   .shatter__piece {
-    transform: none !important;
+    transition: none;
+  }
+
+  .shatter--split .shatter__piece--left,
+  .shatter--split .shatter__piece--right {
+    transform: none;
   }
 }
