@@ -15,11 +15,11 @@ export default function VisionSection() {
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.9, ease: easeOut }}
           >
-            KINETIC VISION
+            ADVANCE
             <br />
-            FOR EVERY
+            VISUAL LEARNING
             <br />
-            LEARNER.
+            MODULES
           </motion.h2>
 
           <motion.img
