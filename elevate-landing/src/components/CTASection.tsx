@@ -126,7 +126,7 @@ export default function CTASection() {
           viewport={viewportOnce}
           transition={{ duration: 0.7, delay: 0.1, ease: easeOut }}
         >
-          Tell us about your institution. Our team will map your syllabus to a kinetic
+          Tell us about your institution. Our team will map your syllabus to a
           production plan within 48 hours.
         </motion.p>
 

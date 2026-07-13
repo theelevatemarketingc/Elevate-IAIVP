@@ -79,7 +79,7 @@ export default function CustomLMS() {
           viewport={viewportOnce}
           transition={{ duration: 0.65, delay: 0.06, ease: easeOut }}
         >
-          Seamlessly bridge your existing LMS with Elevate's kinetic modules, or launch our custom-branded student portal complete with a personal AI learning companion.
+          Seamlessly bridge your existing LMS with Elevate's visual modules, or launch our custom-branded student portal complete with a personal AI learning companion.
         </motion.p>
 
         <div className="lms__grid">
@@ -176,7 +176,7 @@ export default function CustomLMS() {
               <div className="lms__feature-content">
                 <h3 className="lms__feature-title">Google Classroom & Major LMS Sync</h3>
                 <p className="lms__feature-desc">
-                  Full, native integration with Canvas, Blackboard, Moodle, and Google Classroom. Deploy kinetic modules directly to students with one-click package exports.
+                  Full, native integration with Canvas, Blackboard, Moodle, and Google Classroom. Deploy visual modules directly to students with one-click package exports.
                 </p>
               </div>
             </motion.div>
@@ -217,7 +217,7 @@ export default function CustomLMS() {
               <div className="lms__feature-content">
                 <h3 className="lms__feature-title">Interactive Student Hub</h3>
                 <p className="lms__feature-desc">
-                  A gorgeous, dark-mode student portal where learners can view their living curriculum maps and track weekly progress.
+                  A gorgeous student portal where learners can view their living curriculum maps and track weekly progress.
                 </p>
               </div>
             </motion.div>
