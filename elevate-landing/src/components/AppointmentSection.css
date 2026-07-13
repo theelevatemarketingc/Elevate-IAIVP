@@ -1,0 +1,35 @@
+.appointment {
+  position: relative;
+  padding-bottom: clamp(24px, 4vw, 48px);
+}
+
+.appointment__inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.appointment__media {
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.appointment__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 520px;
+  object-fit: contain;
+  object-position: center;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+}
+
+@media (max-width: 900px) {
+  .appointment__img {
+    max-height: 360px;
+  }
+}

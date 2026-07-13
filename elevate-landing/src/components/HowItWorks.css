@@ -1,0 +1,131 @@
+.pipeline {
+  position: relative;
+}
+
+.pipeline--after-hero {
+  padding-top: clamp(28px, 4vw, 48px) !important;
+}
+
+.pipeline__trail {
+  position: absolute;
+  top: 50%;
+  left: -10%;
+  width: 120%;
+  height: 220px;
+  transform: translateY(-30%);
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    rgba(139, 0, 34, 0.28) 0%,
+    rgba(74, 14, 23, 0.12) 45%,
+    transparent 70%
+  );
+  z-index: 0;
+  pointer-events: none;
+}
+
+.pipeline__eyebrow {
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.pipeline__title {
+  text-align: center;
+  font-size: clamp(32px, 5vw, 56px);
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  margin-bottom: 48px;
+}
+
+.pipeline__chain {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.pipeline__card {
+  position: relative;
+  padding: 28px 26px 30px;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+}
+
+.pipeline__connector {
+  position: absolute;
+  top: 50%;
+  right: -20px;
+  width: 20px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--burgundy-muted), transparent);
+  z-index: 3;
+}
+
+.pipeline__visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 160px;
+  margin-bottom: 22px;
+}
+
+.pipeline__img {
+  max-width: 100%;
+  max-height: 150px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.pipeline__card:hover .pipeline__img {
+  transform: translateY(-4px) scale(1.03);
+}
+
+.pipeline__label {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 12px;
+}
+
+.pipeline__desc {
+  font-size: 13.5px;
+  color: var(--silver-dim);
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+@media (max-width: 980px) {
+  .pipeline__title {
+    margin-bottom: 32px;
+    padding: 0 8px;
+  }
+
+  .pipeline__chain {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .pipeline__connector {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .pipeline__card {
+    min-height: unset;
+    padding: 22px 18px 24px;
+  }
+  .pipeline__visual {
+    height: 120px;
+  }
+  .pipeline__img {
+    max-height: 110px;
+  }
+  .pipeline__trail {
+    height: 140px;
+  }
+}

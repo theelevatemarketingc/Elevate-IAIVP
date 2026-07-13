@@ -1,0 +1,129 @@
+.platform.section {
+  position: relative;
+  overflow: visible;
+  background: transparent;
+  content-visibility: visible;
+  padding-top: clamp(16px, 3vw, 28px) !important;
+  padding-bottom: clamp(4px, 1vw, 12px) !important;
+}
+
+.platform__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  overflow: visible;
+}
+
+.platform__stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1100px;
+  height: auto;
+  line-height: 0;
+}
+
+.platform__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  image-rendering: auto;
+  transform: translateX(12%);
+}
+
+.platform__visual {
+  position: relative;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  pointer-events: none;
+}
+
+.platform__title-wrap {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: min(100%, 14ch);
+  padding: 0 16px;
+  pointer-events: none;
+}
+
+.platform__title {
+  margin: 0;
+  font-size: clamp(32px, 5vw, 58px);
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+  line-height: 1.02;
+  text-align: center;
+  text-shadow: 0 2px 28px rgba(0, 0, 0, 0.9);
+}
+
+.platform__link {
+  position: relative;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: -6px 0 0;
+  line-height: normal;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--white);
+  border-bottom: 1px solid rgba(194, 0, 58, 0.65);
+  padding-bottom: 4px;
+  white-space: nowrap;
+  transition:
+    color 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    gap 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.platform__link:hover {
+  color: var(--burgundy-glow);
+  border-color: var(--burgundy-glow);
+  gap: 14px;
+}
+
+@media (max-width: 900px) {
+  .platform__img {
+    transform: translateX(4%);
+  }
+
+  .platform__title {
+    font-size: clamp(26px, 7vw, 38px);
+  }
+
+  .platform__title-wrap {
+    width: min(100%, 16ch);
+    top: 40%;
+  }
+
+  .platform__link {
+    margin-top: 4px;
+    font-size: 12px;
+    white-space: normal;
+    text-align: center;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 560px) {
+  .platform__img {
+    transform: none;
+  }
+
+  .platform__stage {
+    max-width: 100%;
+  }
+}
